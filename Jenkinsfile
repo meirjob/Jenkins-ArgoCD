@@ -24,10 +24,10 @@ pipeline {
                  echo 'Empty'
             }
         }
-        stage('Deploy') {
+        stage('PushImage') {
             steps {
                 script{
-                        docker.withRegistry('https://777644549717.dkr.ecr.eu-west-1.amazonaws.com/simpleapp', 'ecr:eu-west-1:aws-credentials') {
+                        docker.withRegistry('https://777644549717.dkr.ecr.eu-west-1.amazonaws.com', 'ecr:eu-west-1:aws-credentials') {
                     app.push("${env.BUILD_NUMBER}")
                     app.push("latest")
                     }
