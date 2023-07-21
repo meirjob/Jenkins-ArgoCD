@@ -2,7 +2,7 @@ pipeline {
  agent any
     environment {
         AWS_ACCOUNT_ID="777644549717"
-        AWS_DEFAULT_REGION="eu-west-1" 
+        AWS_DEFAULT_REGION="us-east-1" 
         IMAGE_REPO_NAME="sampleapp"
         IMAGE_TAG="latest"
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
@@ -13,7 +13,7 @@ pipeline {
         stage('Logging into AWS ECR') {
             steps {
                 script {
-                    sh "aws ecr get-login-password - region ${AWS_DEFAULT_REGION} | docker login - username AWS - password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
+                    sh "aws ecr-public get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin public.ecr.aws/c8o9t7l5"
                 }
  
             }
@@ -39,8 +39,9 @@ pipeline {
         stage('Pushing to ECR') {
             steps{ 
                 script {
-                    sh "docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:$IMAGE_TAG"
-                    sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+                    
+                    sh "docker tag sampleapp:latest public.ecr.aws/c8o9t7l5/sampleapp:latest"
+                    sh "docker push public.ecr.aws/c8o9t7l5/sampleapp:latest"
                 }
             }
         }
