@@ -4,7 +4,7 @@ pipeline {
         AWS_ACCOUNT_ID="777644549717"
         AWS_DEFAULT_REGION="eu-west-1" 
         IMAGE_REPO_NAME="simpleapp"
-        IMAGE_TAG="latest"
+        IMAGE_TAG=env.BUILD_NUMBER
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
     }    
  
@@ -22,7 +22,6 @@ pipeline {
         stage('Cloning Git') {
             steps {
                 checkout scm
-                //checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/sd031/aws_codebuild_codedeploy_nodeJs_demo.git']]]) 
             }
         }
  
