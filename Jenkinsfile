@@ -44,9 +44,9 @@ pipeline {
             }
         }
 
-        // stage('Trigger ClusterUpdate') {
-        //         echo "triggering updateclusterjob"
-        //         build job: 'updatecluster', parameters: [string(name: 'DOCKERTAG', value: env.IMAGE_TAG)]
-        // }
+        stage('Trigger ClusterUpdate') {
+                echo "triggering updateclusterjob"
+                build job: 'updatecluster', parameters: [string(name: 'DOCKERTAG', value: env.IMAGE_TAG)]
+        }
     }
 }
