@@ -45,8 +45,10 @@ pipeline {
         }
 
         stage('Trigger ClusterUpdate') {
+            steps{
                 echo "triggering updateclusterjob"
                 build job: 'updatecluster', parameters: [string(name: 'DOCKERTAG', value: env.IMAGE_TAG)]
+            }
         }
     }
 }
