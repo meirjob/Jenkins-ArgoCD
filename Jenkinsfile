@@ -4,7 +4,7 @@ pipeline {
         AWS_ACCOUNT_ID="777644549717"
         AWS_DEFAULT_REGION="eu-west-1" 
         IMAGE_REPO_NAME="simpleapp"
-        IMAGE_TAG="latest" //env.BUILD_NUMBER
+        IMAGE_TAG=env.BUILD_NUMBER// "latest"
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
     }    
  
@@ -47,7 +47,7 @@ pipeline {
         stage('Trigger ClusterUpdate') {
             steps{
                 echo "triggering updateclusterjob"
-                build job: 'updatecluster', parameters: [string(name: 'IMAGE_TAG', value: env.IMAGE_TAG)]
+                build job: 'updatecluster', parameters: [string(name: 'IMAGE_TAG', value: IMAGE_TAG)]
             }
         }
     }
